@@ -1,5 +1,8 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+List<Widget> crd = [];
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({
@@ -11,19 +14,50 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePage extends State<MyHomePage> {
+  int i = 0;
+
+  @override
+  void initState() {
+    Timer mytimer = Timer.periodic(Duration(seconds: 3), (timer) {
+      setState(() {
+        if (i == 4)
+          i = 0;
+        else
+          i = i + 1;
+      });
+      //mytimer.cancel() //to terminate this timer
+    });
+    super.initState();
+  }
+
   Widget card(BuildContext context, String imageadd, String heading,
       String Description) {
     return Container(
+      margin: EdgeInsets.only(top: 34),
       width: 358,
       height: 482,
       decoration: BoxDecoration(
-          color: Colors.lightBlue, borderRadius: BorderRadius.circular(41)),
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              transform: GradientRotation(0.1713913),
+              colors: [
+                Color.fromARGB(255, 210, 208, 250).withOpacity(1),
+                Color.fromARGB(255, 245, 243, 252).withOpacity(1),
+                // Colors.white.withOpacity(1),
+                Colors.white.withOpacity(1),
+                //Color.fromARGB(255, 229, 201, 242).withOpacity(1),
+                Color.fromARGB(255, 229, 201, 242).withOpacity(1),
+              ]),
+          borderRadius: BorderRadius.circular(41)),
       child: Stack(children: [
         Container(
-          width: 79.53,
-          height: 104,
+          //width: 79.53,
+          // height: 104,
           margin: EdgeInsets.only(left: 27, top: 83),
-          child: Image.asset(imageadd),
+          child: Image.asset(
+            imageadd,
+          ),
         ),
         Container(
             width: 264,
@@ -34,7 +68,7 @@ class _MyHomePage extends State<MyHomePage> {
               style: TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: 28,
-                letterSpacing: 0.36,
+                letterSpacing: 0.1,
               ),
             )),
         Container(
@@ -55,45 +89,165 @@ class _MyHomePage extends State<MyHomePage> {
   Widget Button(BuildContext context) {
     return Container(
         width: 358,
-        margin: EdgeInsets.only(left: 16, top: 115, right: 16),
+        margin: EdgeInsets.only(left: 16, top: 26, right: 16),
         padding:
             EdgeInsets.only(left: 134.5, top: 14, right: 134.5, bottom: 14),
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(14)),
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                transform: GradientRotation(0.1713913),
+                colors: [
+                  Color(0xffC241FF).withOpacity(1),
+                  Color(0xff25C3D8).withOpacity(1),
+                ]),
+            // color: Colors.white,
+            borderRadius: BorderRadius.circular(30)),
         child: Text(
           "Get Started",
           textAlign: TextAlign.center,
           style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 10,
+            color: Colors.white,
+            fontWeight: FontWeight.w500,
+            fontSize: 14,
+            letterSpacing: .7,
           ),
+        ));
+  }
+
+  Widget dotindex(BuildContext context) {
+    return Container(
+        width: 86,
+        height: 24,
+        margin: EdgeInsets.only(left: 152, top: 1, right: 152, bottom: 59),
+        padding: EdgeInsets.only(left: 9, right: 9),
+        child: Row(
+          children: [
+            Text(
+              ".",
+              style: i == 0
+                  ? const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 24,
+                    )
+                  : const TextStyle(
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24),
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Text(
+              ".",
+              style: i == 1
+                  ? const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 24)
+                  : const TextStyle(
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24),
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Text(
+              ".",
+              style: i == 2
+                  ? const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 24)
+                  : const TextStyle(
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24),
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Text(
+              ".",
+              style: i == 3
+                  ? const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 24)
+                  : const TextStyle(
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24),
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Text(
+              ".",
+              style: i == 4
+                  ? const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 24)
+                  : const TextStyle(
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24),
+            )
+          ],
         ));
   }
 
   Widget Footnote(BuildContext context, String text) {
     return Container(
-      margin: EdgeInsets.only(top: 65, left: 93, right: 93),
-      child: Text(
-        text,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: 10,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-    );
+        margin: EdgeInsets.only(top: 65, left: 93, right: 92),
+        child: RichText(
+          text: TextSpan(
+            text: 'Have a question? ',
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w400,
+              color: Color(0xFFF8E8E93),
+              letterSpacing: .7,
+            ),
+            children: const <TextSpan>[
+              TextSpan(
+                text: 'Contact us',
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w400,
+                  color: Color(0xFFF9C63E5),
+                  letterSpacing: .7,
+                ),
+              ),
+            ],
+          ),
+        )
+        // child: Text(
+        //   text,
+        //   textAlign: TextAlign.center,
+        //   style: TextStyle(
+        //     fontSize: 13,
+        //     fontWeight: FontWeight.w400,
+        //     color: Color(0xFFF8E8E93),
+        //     letterSpacing: .7,
+        //   ),
+        // ),
+        );
   }
 
   Widget Footnote1(BuildContext context, String text) {
     return Container(
-      margin: EdgeInsets.only(left: 93, right: 93),
+      margin: EdgeInsets.only(left: 98, right: 97, top: 4),
       child: Text(
         text,
         textAlign: TextAlign.center,
         style: TextStyle(
-          fontSize: 10,
+          fontSize: 13,
           fontWeight: FontWeight.w400,
+          color: Color(0xFFF8E8E93),
         ),
       ),
     );
@@ -101,37 +255,41 @@ class _MyHomePage extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    crd.add(card(context, "assests/images/privacy.png", "Private Calling",
+        "Make Private Calls to over 1200 destinations worldwide using Dialr’s Secured Communications Network"));
+    crd.add(card(context, "assests/images/desktop.png", "Cross-platform",
+        "Enjoy seamless calling experience on Dialr’s mobile application and WebApp."));
+    crd.add(card(
+        context,
+        "assests/images/calling.png",
+        "Cheap international  & local calling rates",
+        "Call anywhere on the globe at cheap calling ratesPrice starts @ ¢2 per min."));
+    crd.add(card(
+        context,
+        "assests/images/Group.png",
+        "Call recording on all numbers",
+        "Automatic call recordings on all your numbers and can be accessed on mobile or desktop."));
+    crd.add(card(
+        context,
+        "assests/images/virtual.png",
+        "Buy different virtual numbers",
+        "Get a Virtual Second Phone Number from USA, Canada & Virgin Islands. No sim required"));
     return Scaffold(
-        body: ListView(
-      children: [
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(children: [
-            card(context, "assests/images/privacy.jpg", "Private Calling",
-                "Make Private Calls to over 1200 destinations worldwide using Dialr’s Secured Communications Network"),
-            card(context, "assests/images/desktop.jpg", "Cross-platform",
-                "Enjoy seamless calling experience on Dialr’s mobile application and WebApp."),
-            card(
-                context,
-                "assests/images/calling.jpg",
-                "Cheap international  & local calling rates",
-                "Call anywhere on the globe at cheap calling ratesPrice starts @ ¢2 per min."),
-            card(
-                context,
-                "assests/images/Group.jpg",
-                "Call recording on all numbers",
-                "Automatic call recordings on all your numbers and can be accessed on mobile or desktop."),
-            card(
-                context,
-                "assests/images/virtual.jpg",
-                "Buy different virtual numbers",
-                "Get a Virtual Second Phone Number from USA, Canada & Virgin Islands. No sim required")
-          ]),
-        ),
-        Button(context),
-        Footnote(context, "Have a question? Contact us"),
-        Footnote1(context, "Terms of use  |  Privacy policy")
-      ],
-    ));
+        body: Container(
+            constraints: BoxConstraints(maxHeight: 858, maxWidth: 390),
+            color: Colors.black,
+            child: Column(
+              children: [
+                // SingleChildScrollView(
+                //   scrollDirection: Axis.horizontal,
+                //   child: Row(children: []),
+                // ),
+                crd[i],
+                dotindex(context),
+                Button(context),
+                Footnote(context, "Have a question? Contact us"),
+                Footnote1(context, "Terms of use  |  Privacy policy")
+              ],
+            )));
   }
 }
