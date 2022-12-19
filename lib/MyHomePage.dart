@@ -293,3 +293,363 @@ class _MyHomePage extends State<MyHomePage> {
             )));
   }
 }
+
+/*
+class LandingPageScreen extends StatefulWidget {
+  // Top-level route name
+  static const String routeName = '/landing';
+
+  final List<String> images;
+  final List<String> titles;
+  final List<String> descriptions;
+  final String nextRoute;
+
+  const LandingPageScreen({
+    Key? key,
+    required this.nextRoute,
+    required this.images,
+    required this.titles,
+    required this.descriptions,
+  });
+
+  @override
+  State<LandingPageScreen> createState() => _LandingPageScreen();
+}
+
+class _LandingPageScreen extends State<LandingPageScreen> {
+  int currentCardIndex = 0;
+  final List<Widget> cards = [];
+
+  Timer? carouselTimer;
+  final Duration carouselDuration = const Duration(seconds: 4);
+
+  @override
+  void initState() {
+    // Prepare list of cards from input parameters
+    widget.titles.asMap().forEach(
+      (key, title) {
+        cards.add(
+          card(
+            context,
+            widget.images[key],
+            title,
+            widget.descriptions[key],
+          ),
+        );
+      },
+    );
+    super.initState();
+    // Start carousel timer
+    carouselTimer = Timer.periodic(
+      carouselDuration,
+      (timer) {
+        setState(
+          () {
+            currentCardIndex += 1;
+            currentCardIndex = currentCardIndex % widget.titles.length;
+          },
+        );
+      },
+    );
+  }
+
+  Widget card(
+    BuildContext context,
+    String imageadd,
+    String heading,
+    String description,
+  ) {
+    return Container(
+      margin: EdgeInsets.only(top: 34),
+      width: 358,
+      height: 482,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          transform: GradientRotation(0.1713913),
+          colors: [
+            Color.fromARGB(255, 210, 208, 250).withOpacity(1),
+            Color.fromARGB(255, 245, 243, 252).withOpacity(1),
+            // Colors.white.withOpacity(1),
+            Colors.white.withOpacity(1),
+            //Color.fromARGB(255, 229, 201, 242).withOpacity(1),
+            Color.fromARGB(255, 229, 201, 242).withOpacity(1),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(41),
+      ),
+      child: Stack(
+        children: [
+          Container(
+            //width: 79.53,
+            // height: 104,
+            margin: EdgeInsets.only(left: 27, top: 83),
+            child: Image.asset(
+              imageadd,
+            ),
+          ),
+          Container(
+              width: 264,
+              height: 34,
+              margin: EdgeInsets.only(left: 24, top: 255),
+              child: Text(
+                heading,
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 28,
+                  letterSpacing: 0.1,
+                  color: Colors.black,
+                  decoration: TextDecoration.none,
+                ),
+              )),
+          Container(
+            width: 304,
+            height: 66,
+            margin: EdgeInsets.only(left: 24, top: 321),
+            child: Text(
+              description,
+              style: const TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 17,
+                color: Colors.black,
+                decoration: TextDecoration.none,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget button(BuildContext context) {
+    return Container(
+      width: 358,
+      margin: EdgeInsets.only(left: 16, top: 26, right: 16),
+      padding: EdgeInsets.only(left: 134.5, top: 14, right: 134.5, bottom: 14),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          transform: GradientRotation(0.1713913),
+          colors: [
+            Color(0xffC241FF).withOpacity(1),
+            Color(0xff25C3D8).withOpacity(1),
+          ],
+        ),
+        // color: Colors.white,
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: Text(
+        "Get Started",
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.w500,
+          fontSize: 14,
+          letterSpacing: .7,
+          decoration: TextDecoration.none,
+        ),
+      ),
+    );
+  }
+
+  Widget dotindex(BuildContext context) {
+    return Container(
+      width: 86,
+      // height: 24,
+      // margin: EdgeInsets.only(left: 152, top: 1, right: 152, bottom: 59),
+      // padding: EdgeInsets.only(left: 9, right: 9),
+      child: Row(
+        children: [
+          Text(
+            ".",
+            style: currentCardIndex == 0
+                ? const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 24,
+                    decoration: TextDecoration.none,
+                  )
+                : const TextStyle(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                    decoration: TextDecoration.none,
+                  ),
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Text(
+            ".",
+            style: currentCardIndex == 1
+                ? const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 24,
+                    decoration: TextDecoration.none,
+                  )
+                : const TextStyle(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                    decoration: TextDecoration.none,
+                  ),
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Text(
+            ".",
+            style: currentCardIndex == 2
+                ? const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 24,
+                    decoration: TextDecoration.none,
+                  )
+                : const TextStyle(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                    decoration: TextDecoration.none,
+                  ),
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Text(
+            ".",
+            style: currentCardIndex == 3
+                ? const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 24,
+                    decoration: TextDecoration.none,
+                  )
+                : const TextStyle(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                    decoration: TextDecoration.none,
+                  ),
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Text(
+            ".",
+            style: currentCardIndex == 4
+                ? const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 24,
+                    decoration: TextDecoration.none,
+                  )
+                : const TextStyle(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                    decoration: TextDecoration.none,
+                  ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget footnote(BuildContext context, String text) {
+    return Container(
+        margin: EdgeInsets.only(top: 65, left: 93, right: 92),
+        child: RichText(
+          text: TextSpan(
+            text: 'Have a question? ',
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w400,
+              color: Color(0xFFF8E8E93),
+              letterSpacing: .7,
+            ),
+            children: const <TextSpan>[
+              TextSpan(
+                text: 'Contact us',
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w400,
+                  color: Color(0xFFF9C63E5),
+                  letterSpacing: .7,
+                ),
+              ),
+            ],
+          ),
+        )
+        // child: Text(
+        //   text,
+        //   textAlign: TextAlign.center,
+        //   style: TextStyle(
+        //     fontSize: 13,
+        //     fontWeight: FontWeight.w400,
+        //     color: Color(0xFFF8E8E93),
+        //     letterSpacing: .7,
+        //   ),
+        // ),
+        );
+  }
+
+  Widget footnote1(BuildContext context, String text) {
+    return Container(
+      margin: EdgeInsets.only(left: 98, right: 97, top: 4),
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 13,
+          fontWeight: FontWeight.w400,
+          color: Color(0xFFF8E8E93),
+          decoration: TextDecoration.none,
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      top: true,
+      bottom: true,
+      child: Column(
+        children: [
+          Expanded(
+            flex: 3,
+            child: Column(
+              children: [
+                cards[currentCardIndex],
+                dotindex(context),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      widget.nextRoute,
+                    );
+                  },
+                  child: button(context),
+                ),
+                footnote(context, "Have a question? Contact us"),
+                footnote1(context, "Terms of use  |  Privacy policy"),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+*/

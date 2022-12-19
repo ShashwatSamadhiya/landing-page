@@ -25,6 +25,31 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
+      /*home: LandingPageScreen(
+          nextRoute: '/',
+          titles: [
+            "Private Calling",
+            "Cross-platform",
+            "Cheap international & local calling rates",
+            "Call recording on all numbers",
+            "Buy different virtual numbers",
+          ],
+          descriptions: [
+            "Make Private Calls to over 1200 destinations worldwide using Dialr's Secured Communications Network",
+            "Enjoy seamless calling experience on Dialr's mobile application and WebApp.",
+            "Call anywhere on the globe at cheap calling ratesPrice starts @ ¢2 per min.",
+            "Automatic call recordings on all your numbers and can be accessed on mobile or desktop.",
+            "Get a Virtual Second Phone Number from USA, Canada & Virgin Islands. No sim required",
+          ],
+          images: [
+            "assests/images/privacy.png",
+            "assests/images/desktop.png",
+            "assests/images/calling.png",
+            "assests/images/Group.png",
+            "assests/images/virtual.png"
+          ],
+        )
+       */
       home: const MyHomePage(),
     );
   }
