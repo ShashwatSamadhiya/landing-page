@@ -1,7 +1,8 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
+/*
 List<Widget> crd = [];
 
 class MyHomePage extends StatefulWidget {
@@ -88,7 +89,8 @@ class _MyHomePage extends State<MyHomePage> {
 
   Widget Button(BuildContext context) {
     return Container(
-        width: 358,
+        //width: 358,
+        constraints: BoxConstraints(maxWidth: 358),
         margin: EdgeInsets.only(left: 16, top: 26, right: 16),
         padding:
             EdgeInsets.only(left: 134.5, top: 14, right: 134.5, bottom: 14),
@@ -275,8 +277,10 @@ class _MyHomePage extends State<MyHomePage> {
         "Buy different virtual numbers",
         "Get a Virtual Second Phone Number from USA, Canada & Virgin Islands. No sim required"));
     return Scaffold(
-        body: Container(
-            constraints: BoxConstraints(maxHeight: 858, maxWidth: 390),
+        body: ListView(
+      children: [
+        Container(
+            //constraints: BoxConstraints(maxHeight: 858, maxWidth: 390),
             color: Colors.black,
             child: Column(
               children: [
@@ -290,11 +294,22 @@ class _MyHomePage extends State<MyHomePage> {
                 Footnote(context, "Have a question? Contact us"),
                 Footnote1(context, "Terms of use  |  Privacy policy")
               ],
-            )));
+            ))
+      ],
+    ));
+  }
+}
+*/
+
+class ScaleSize {
+  static double textScaleFactor(BuildContext context,
+      {double maxTextScaleFactor = 2}) {
+    final width = MediaQuery.of(context).size.width;
+    double val = (width / 1400) * maxTextScaleFactor;
+    return max(1, min(val, maxTextScaleFactor));
   }
 }
 
-/*
 class LandingPageScreen extends StatefulWidget {
   // Top-level route name
   static const String routeName = '/landing';
@@ -338,6 +353,7 @@ class _LandingPageScreen extends State<LandingPageScreen> {
         );
       },
     );
+
     super.initState();
     // Start carousel timer
     carouselTimer = Timer.periodic(
@@ -359,10 +375,11 @@ class _LandingPageScreen extends State<LandingPageScreen> {
     String heading,
     String description,
   ) {
-    return Container(
-      margin: EdgeInsets.only(top: 34),
+    return Flexible(
+        child: Container(
+      margin: EdgeInsets.only(left: 16, right: 16),
       width: 358,
-      height: 482,
+      //height: 482,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -379,54 +396,78 @@ class _LandingPageScreen extends State<LandingPageScreen> {
         ),
         borderRadius: BorderRadius.circular(41),
       ),
-      child: Stack(
+      //  child: Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            //width: 79.53,
-            // height: 104,
-            margin: EdgeInsets.only(left: 27, top: 83),
-            child: Image.asset(
-              imageadd,
-            ),
-          ),
-          Container(
-              width: 264,
-              height: 34,
-              margin: EdgeInsets.only(left: 24, top: 255),
-              child: Text(
-                heading,
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 28,
-                  letterSpacing: 0.1,
-                  color: Colors.black,
-                  decoration: TextDecoration.none,
-                ),
-              )),
-          Container(
-            width: 304,
-            height: 66,
-            margin: EdgeInsets.only(left: 24, top: 321),
-            child: Text(
-              description,
-              style: const TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: 17,
-                color: Colors.black,
-                decoration: TextDecoration.none,
+          Expanded(flex: 259, child: Container()),
+          Expanded(
+            flex: 325,
+            child: Container(
+              //width: 79.53,
+              // height: 104,
+              margin: EdgeInsets.only(left: 27),
+              //margin: EdgeInsets.only(left: 27, top: 83),
+              child: Image.asset(
+                imageadd,
               ),
             ),
           ),
+          Expanded(flex: 212, child: Container()),
+          Expanded(
+            flex: 250,
+            child: Container(
+                margin: const EdgeInsets.only(
+                  left: 24,
+                ),
+                //width: 264,
+                // height: 34,
+                //margin: EdgeInsets.only(left: 24, top: 255),
+                child: Text(
+                  heading,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  textScaleFactor: 1,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 28,
+                    letterSpacing: 0.1,
+                    color: Colors.black,
+                    decoration: TextDecoration.none,
+                  ),
+                )),
+          ),
+          Expanded(flex: 100, child: Container()),
+          Expanded(
+            flex: 325,
+            child: Container(
+              width: 304,
+              margin: EdgeInsets.only(left: 24),
+              //  height: 66,
+              // margin: EdgeInsets.only(left: 24, top: 321),
+              child: Text(
+                description,
+                textScaleFactor: 1,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 17,
+                  color: Colors.black,
+                  decoration: TextDecoration.none,
+                ),
+              ),
+            ),
+          ),
+          Expanded(flex: 296, child: Container())
         ],
       ),
-    );
+    ));
   }
 
   Widget button(BuildContext context) {
     return Container(
       width: 358,
-      margin: EdgeInsets.only(left: 16, top: 26, right: 16),
-      padding: EdgeInsets.only(left: 134.5, top: 14, right: 134.5, bottom: 14),
+      margin: EdgeInsets.only(left: 16, right: 16),
+      padding: EdgeInsets.only(top: 14, bottom: 14),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -442,6 +483,8 @@ class _LandingPageScreen extends State<LandingPageScreen> {
       ),
       child: Text(
         "Get Started",
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
         textAlign: TextAlign.center,
         style: TextStyle(
           color: Colors.white,
@@ -456,11 +499,14 @@ class _LandingPageScreen extends State<LandingPageScreen> {
 
   Widget dotindex(BuildContext context) {
     return Container(
-      width: 86,
+      // width: 86,
       // height: 24,
-      // margin: EdgeInsets.only(left: 152, top: 1, right: 152, bottom: 59),
+      // margin: EdgeInsets.only(
+      //   left: 152,
+      // ),
       // padding: EdgeInsets.only(left: 9, right: 9),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             ".",
@@ -561,29 +607,31 @@ class _LandingPageScreen extends State<LandingPageScreen> {
 
   Widget footnote(BuildContext context, String text) {
     return Container(
-        margin: EdgeInsets.only(top: 65, left: 93, right: 92),
+        // margin: EdgeInsets.only(
+        //   top: 65,
+        // ),
         child: RichText(
-          text: TextSpan(
-            text: 'Have a question? ',
+      text: TextSpan(
+        text: 'Have a question? ',
+        style: TextStyle(
+          fontSize: 13,
+          fontWeight: FontWeight.w400,
+          color: Color(0xFFF8E8E93),
+          letterSpacing: .7,
+        ),
+        children: const <TextSpan>[
+          TextSpan(
+            text: 'Contact us',
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w400,
-              color: Color(0xFFF8E8E93),
+              color: Color(0xFFF9C63E5),
               letterSpacing: .7,
             ),
-            children: const <TextSpan>[
-              TextSpan(
-                text: 'Contact us',
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w400,
-                  color: Color(0xFFF9C63E5),
-                  letterSpacing: .7,
-                ),
-              ),
-            ],
           ),
-        )
+        ],
+      ),
+    )
         // child: Text(
         //   text,
         //   textAlign: TextAlign.center,
@@ -599,7 +647,7 @@ class _LandingPageScreen extends State<LandingPageScreen> {
 
   Widget footnote1(BuildContext context, String text) {
     return Container(
-      margin: EdgeInsets.only(left: 98, right: 97, top: 4),
+      //margin: EdgeInsets.only(top: 4),
       child: Text(
         text,
         textAlign: TextAlign.center,
@@ -621,7 +669,11 @@ class _LandingPageScreen extends State<LandingPageScreen> {
       child: Column(
         children: [
           Expanded(
-            flex: 3,
+            flex: 1,
+            child: Container(),
+          ),
+          Expanded(
+            flex: 16,
             child: Column(
               children: [
                 cards[currentCardIndex],
@@ -629,8 +681,9 @@ class _LandingPageScreen extends State<LandingPageScreen> {
               ],
             ),
           ),
+          Expanded(flex: 2, child: Container()),
           Expanded(
-            flex: 1,
+            flex: 5,
             child: Column(
               children: [
                 GestureDetector(
@@ -642,8 +695,21 @@ class _LandingPageScreen extends State<LandingPageScreen> {
                   },
                   child: button(context),
                 ),
-                footnote(context, "Have a question? Contact us"),
-                footnote1(context, "Terms of use  |  Privacy policy"),
+                Expanded(
+                  flex: 7,
+                  child: Container(),
+                ),
+                Expanded(
+                  flex: 18,
+                  child: Column(children: [
+                    footnote(context, "Have a question? Contact us"),
+                    footnote1(context, "Terms of use  |  Privacy policy"),
+                  ]),
+                ),
+                // Expanded(
+                //   flex: 5,
+                //   child: Container(),
+                // ),
               ],
             ),
           ),
@@ -652,4 +718,3 @@ class _LandingPageScreen extends State<LandingPageScreen> {
     );
   }
 }
-*/
