@@ -324,6 +324,7 @@ class LandingPageScreen extends StatefulWidget {
 
 class _LandingPageScreen extends State<LandingPageScreen> {
   int currentCardIndex = 0;
+  int pacrin = 0;
   final List<Widget> cards = [];
   late PageController _pageController;
   Timer? carouselTimer;
@@ -354,11 +355,13 @@ class _LandingPageScreen extends State<LandingPageScreen> {
         setState(
           () {
             currentCardIndex += 1;
+            pacrin += 1;
             currentCardIndex = currentCardIndex % widget.titles.length;
           },
         );
         _pageController.animateToPage(
-          currentCardIndex,
+          //currentCardIndex,
+          pacrin,
           duration: Duration(milliseconds: 1000),
           curve: Curves.easeInOutCubic,
         );
@@ -392,12 +395,13 @@ class _LandingPageScreen extends State<LandingPageScreen> {
       child: Container(
         width: 388,
         child: PageView.builder(
-          itemCount: 5,
+          // itemCount: 5,
           pageSnapping: true,
           controller: _pageController,
           onPageChanged: (key) {
             setState(() {
-              currentCardIndex = key;
+              pacrin = key;
+              //currentCardIndex = key;
             });
           },
           itemBuilder: (context, key) {
@@ -428,7 +432,7 @@ class _LandingPageScreen extends State<LandingPageScreen> {
       width: 358,
       //height: 482,
       decoration: BoxDecoration(
-        gradient: key == currentCardIndex
+        gradient: key == pacrin
             ? LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -736,6 +740,7 @@ class _LandingPageScreen extends State<LandingPageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(currentCardIndex);
     return SafeArea(
       top: true,
       bottom: true,
