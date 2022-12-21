@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        home: LandingPageScreen(
+        home: const LandingPageScreen(
           nextRoute: '/',
           titles: [
             "Private Calling",

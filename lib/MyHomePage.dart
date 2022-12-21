@@ -301,15 +301,6 @@ class _MyHomePage extends State<MyHomePage> {
 }
 */
 
-class ScaleSize {
-  static double textScaleFactor(BuildContext context,
-      {double maxTextScaleFactor = 2}) {
-    final width = MediaQuery.of(context).size.width;
-    double val = (width / 1400) * maxTextScaleFactor;
-    return max(1, min(val, maxTextScaleFactor));
-  }
-}
-
 class LandingPageScreen extends StatefulWidget {
   // Top-level route name
   static const String routeName = '/landing';
@@ -334,14 +325,14 @@ class LandingPageScreen extends StatefulWidget {
 class _LandingPageScreen extends State<LandingPageScreen> {
   int currentCardIndex = 0;
   final List<Widget> cards = [];
-
+  late PageController _pageController;
   Timer? carouselTimer;
   final Duration carouselDuration = const Duration(seconds: 4);
 
   @override
   void initState() {
     // Prepare list of cards from input parameters
-    widget.titles.asMap().forEach(
+    /* widget.titles.asMap().forEach(
       (key, title) {
         cards.add(
           card(
@@ -353,8 +344,9 @@ class _LandingPageScreen extends State<LandingPageScreen> {
         );
       },
     );
-
+  */
     super.initState();
+    _pageController = PageController(initialPage: 0, viewportFraction: .9);
     // Start carousel timer
     carouselTimer = Timer.periodic(
       carouselDuration,
@@ -365,7 +357,61 @@ class _LandingPageScreen extends State<LandingPageScreen> {
             currentCardIndex = currentCardIndex % widget.titles.length;
           },
         );
+        _pageController.animateToPage(
+          currentCardIndex,
+          duration: Duration(milliseconds: 1000),
+          curve: Curves.easeInOutCubic,
+        );
       },
+    );
+    /*WidgetsBinding.instance
+        .addPostFrameCallback((_) => widget.titles.asMap().forEach(
+              (key, title) {
+                cards.add(
+                  card(
+                    context,
+                    widget.images[key],
+                    title,
+                    widget.descriptions[key],
+                  ),
+                );
+              },
+            ));
+  */
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  Widget makePage(BuildContext) {
+    return Flexible(
+      //constraints: BoxConstraints(maxHeight: 400),
+      child: Container(
+        width: 388,
+        child: PageView.builder(
+          itemCount: 5,
+          pageSnapping: true,
+          controller: _pageController,
+          onPageChanged: (key) {
+            setState(() {
+              currentCardIndex = key;
+            });
+          },
+          itemBuilder: (context, key) {
+            return card(
+              context,
+              widget.images[key % 5],
+              widget.titles[key % 5],
+              widget.descriptions[key % 5],
+              key,
+            );
+            //return cards[key % 5];
+          },
+        ),
+      ),
     );
   }
 
@@ -374,26 +420,33 @@ class _LandingPageScreen extends State<LandingPageScreen> {
     String imageadd,
     String heading,
     String description,
+    int key,
   ) {
     return Flexible(
         child: Container(
-      margin: EdgeInsets.only(left: 16, right: 16),
+      margin: EdgeInsets.only(left: 6, right: 6),
       width: 358,
       //height: 482,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          transform: GradientRotation(0.1713913),
-          colors: [
-            Color.fromARGB(255, 210, 208, 250).withOpacity(1),
-            Color.fromARGB(255, 245, 243, 252).withOpacity(1),
-            // Colors.white.withOpacity(1),
-            Colors.white.withOpacity(1),
-            //Color.fromARGB(255, 229, 201, 242).withOpacity(1),
-            Color.fromARGB(255, 229, 201, 242).withOpacity(1),
-          ],
-        ),
+        gradient: key == currentCardIndex
+            ? LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                transform: GradientRotation(0.1713913),
+                colors: [
+                  Color.fromARGB(255, 210, 208, 250).withOpacity(1),
+                  Color.fromARGB(255, 245, 243, 252).withOpacity(1),
+                  // Colors.white.withOpacity(1),
+                  Colors.white.withOpacity(1),
+                  //Color.fromARGB(255, 229, 201, 242).withOpacity(1),
+                  Color.fromARGB(255, 229, 201, 242).withOpacity(1),
+                ],
+              )
+            : LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                transform: GradientRotation(0.1713913),
+                colors: [Colors.grey, Colors.grey]),
         borderRadius: BorderRadius.circular(41),
       ),
       //  child: Expanded(
@@ -428,9 +481,12 @@ class _LandingPageScreen extends State<LandingPageScreen> {
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                   textScaleFactor: 1,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.w700,
-                    fontSize: 28,
+                    fontSize: min(
+                        28,
+                        min(MediaQuery.of(context).size.width / 14,
+                            MediaQuery.of(context).size.height / 28)),
                     letterSpacing: 0.1,
                     color: Colors.black,
                     decoration: TextDecoration.none,
@@ -448,9 +504,12 @@ class _LandingPageScreen extends State<LandingPageScreen> {
               child: Text(
                 description,
                 textScaleFactor: 1,
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.w400,
-                  fontSize: 17,
+                  fontSize: min(
+                      17,
+                      min(MediaQuery.of(context).size.width / 23,
+                          MediaQuery.of(context).size.height / 47)),
                   color: Colors.black,
                   decoration: TextDecoration.none,
                 ),
@@ -481,17 +540,22 @@ class _LandingPageScreen extends State<LandingPageScreen> {
         // color: Colors.white,
         borderRadius: BorderRadius.circular(30),
       ),
-      child: Text(
-        "Get Started",
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.w500,
-          fontSize: 14,
-          letterSpacing: .7,
-          decoration: TextDecoration.none,
+      child: Center(
+        child: Text(
+          "Get Started",
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w500,
+            fontSize: min(
+                14,
+                min(MediaQuery.of(context).size.width / 15,
+                    MediaQuery.of(context).size.height / 30)),
+            letterSpacing: .7,
+            decoration: TextDecoration.none,
+          ),
         ),
       ),
     );
@@ -614,16 +678,22 @@ class _LandingPageScreen extends State<LandingPageScreen> {
       text: TextSpan(
         text: 'Have a question? ',
         style: TextStyle(
-          fontSize: 13,
+          fontSize: min(
+              13,
+              min(MediaQuery.of(context).size.width / 20,
+                  MediaQuery.of(context).size.height / 50)),
           fontWeight: FontWeight.w400,
           color: Color(0xFFF8E8E93),
           letterSpacing: .7,
         ),
-        children: const <TextSpan>[
+        children: <TextSpan>[
           TextSpan(
             text: 'Contact us',
             style: TextStyle(
-              fontSize: 13,
+              fontSize: min(
+                  13,
+                  min(MediaQuery.of(context).size.width / 20,
+                      MediaQuery.of(context).size.height / 50)),
               fontWeight: FontWeight.w400,
               color: Color(0xFFF9C63E5),
               letterSpacing: .7,
@@ -652,7 +722,10 @@ class _LandingPageScreen extends State<LandingPageScreen> {
         text,
         textAlign: TextAlign.center,
         style: TextStyle(
-          fontSize: 13,
+          fontSize: min(
+              13,
+              min(MediaQuery.of(context).size.width / 20,
+                  MediaQuery.of(context).size.height / 50)),
           fontWeight: FontWeight.w400,
           color: Color(0xFFF8E8E93),
           decoration: TextDecoration.none,
@@ -676,7 +749,7 @@ class _LandingPageScreen extends State<LandingPageScreen> {
             flex: 16,
             child: Column(
               children: [
-                cards[currentCardIndex],
+                makePage(BuildContext),
                 dotindex(context),
               ],
             ),
@@ -703,6 +776,9 @@ class _LandingPageScreen extends State<LandingPageScreen> {
                   flex: 18,
                   child: Column(children: [
                     footnote(context, "Have a question? Contact us"),
+                    SizedBox(
+                      height: 1.5,
+                    ),
                     footnote1(context, "Terms of use  |  Privacy policy"),
                   ]),
                 ),
