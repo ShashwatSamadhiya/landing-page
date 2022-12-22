@@ -325,6 +325,7 @@ class LandingPageScreen extends StatefulWidget {
 class _LandingPageScreen extends State<LandingPageScreen> {
   int currentCardIndex = 0;
   int pacrin = 0;
+  bool reverse = false;
   final List<Widget> cards = [];
   late PageController _pageController;
   Timer? carouselTimer;
@@ -401,7 +402,7 @@ class _LandingPageScreen extends State<LandingPageScreen> {
           onPageChanged: (key) {
             setState(() {
               pacrin = key;
-              //currentCardIndex = key;
+              // currentCardIndex = key;
             });
           },
           itemBuilder: (context, key) {
@@ -428,7 +429,7 @@ class _LandingPageScreen extends State<LandingPageScreen> {
   ) {
     return Flexible(
         child: Container(
-      margin: EdgeInsets.only(left: 6, right: 6),
+      margin: EdgeInsets.only(left: 5, right: 5),
       width: 358,
       //height: 482,
       decoration: BoxDecoration(
@@ -446,7 +447,7 @@ class _LandingPageScreen extends State<LandingPageScreen> {
                   Color.fromARGB(255, 229, 201, 242).withOpacity(1),
                 ],
               )
-            : LinearGradient(
+            : const LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 transform: GradientRotation(0.1713913),
@@ -476,6 +477,7 @@ class _LandingPageScreen extends State<LandingPageScreen> {
             child: Container(
                 margin: const EdgeInsets.only(
                   left: 24,
+                  right: 2,
                 ),
                 //width: 264,
                 // height: 34,
@@ -487,10 +489,11 @@ class _LandingPageScreen extends State<LandingPageScreen> {
                   textScaleFactor: 1,
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
+                    fontFamily: 'DM_Sans',
                     fontSize: min(
                         28,
-                        min(MediaQuery.of(context).size.width / 14,
-                            MediaQuery.of(context).size.height / 28)),
+                        min(MediaQuery.of(context).size.width / 15,
+                            MediaQuery.of(context).size.height / 30)),
                     letterSpacing: 0.1,
                     color: Colors.black,
                     decoration: TextDecoration.none,
@@ -510,6 +513,7 @@ class _LandingPageScreen extends State<LandingPageScreen> {
                 textScaleFactor: 1,
                 style: TextStyle(
                   fontWeight: FontWeight.w400,
+                  fontFamily: 'DM_Sans',
                   fontSize: min(
                       17,
                       min(MediaQuery.of(context).size.width / 23,
@@ -553,6 +557,7 @@ class _LandingPageScreen extends State<LandingPageScreen> {
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w500,
+            fontFamily: 'DM_Sans',
             fontSize: min(
                 14,
                 min(MediaQuery.of(context).size.width / 15,
@@ -582,12 +587,14 @@ class _LandingPageScreen extends State<LandingPageScreen> {
                 ? const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w900,
+                    fontFamily: 'DM_Sans',
                     fontSize: 24,
                     decoration: TextDecoration.none,
                   )
                 : const TextStyle(
                     color: Colors.grey,
                     fontWeight: FontWeight.bold,
+                    fontFamily: 'DM_Sans',
                     fontSize: 24,
                     decoration: TextDecoration.none,
                   ),
@@ -601,6 +608,7 @@ class _LandingPageScreen extends State<LandingPageScreen> {
                 ? const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w900,
+                    fontFamily: 'DM_Sans',
                     fontSize: 24,
                     decoration: TextDecoration.none,
                   )
@@ -608,6 +616,7 @@ class _LandingPageScreen extends State<LandingPageScreen> {
                     color: Colors.grey,
                     fontWeight: FontWeight.bold,
                     fontSize: 24,
+                    fontFamily: 'DM_Sans',
                     decoration: TextDecoration.none,
                   ),
           ),
@@ -620,12 +629,14 @@ class _LandingPageScreen extends State<LandingPageScreen> {
                 ? const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w900,
+                    fontFamily: 'DM_Sans',
                     fontSize: 24,
                     decoration: TextDecoration.none,
                   )
                 : const TextStyle(
                     color: Colors.grey,
                     fontWeight: FontWeight.bold,
+                    fontFamily: 'DM_Sans',
                     fontSize: 24,
                     decoration: TextDecoration.none,
                   ),
@@ -640,10 +651,12 @@ class _LandingPageScreen extends State<LandingPageScreen> {
                     color: Colors.white,
                     fontWeight: FontWeight.w900,
                     fontSize: 24,
+                    fontFamily: 'DM_Sans',
                     decoration: TextDecoration.none,
                   )
                 : const TextStyle(
                     color: Colors.grey,
+                    fontFamily: 'DM_Sans',
                     fontWeight: FontWeight.bold,
                     fontSize: 24,
                     decoration: TextDecoration.none,
@@ -658,11 +671,13 @@ class _LandingPageScreen extends State<LandingPageScreen> {
                 ? const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w900,
+                    fontFamily: 'DM_Sans',
                     fontSize: 24,
                     decoration: TextDecoration.none,
                   )
                 : const TextStyle(
                     color: Colors.grey,
+                    fontFamily: 'DM_Sans',
                     fontWeight: FontWeight.bold,
                     fontSize: 24,
                     decoration: TextDecoration.none,
@@ -686,6 +701,7 @@ class _LandingPageScreen extends State<LandingPageScreen> {
               13,
               min(MediaQuery.of(context).size.width / 20,
                   MediaQuery.of(context).size.height / 50)),
+          fontFamily: 'DM_Sans',
           fontWeight: FontWeight.w400,
           color: Color(0xFFF8E8E93),
           letterSpacing: .7,
@@ -699,6 +715,7 @@ class _LandingPageScreen extends State<LandingPageScreen> {
                   min(MediaQuery.of(context).size.width / 20,
                       MediaQuery.of(context).size.height / 50)),
               fontWeight: FontWeight.w400,
+              fontFamily: 'DM_Sans',
               color: Color(0xFFF9C63E5),
               letterSpacing: .7,
             ),
@@ -731,8 +748,10 @@ class _LandingPageScreen extends State<LandingPageScreen> {
               min(MediaQuery.of(context).size.width / 20,
                   MediaQuery.of(context).size.height / 50)),
           fontWeight: FontWeight.w400,
+          fontFamily: 'DM_Sans',
           color: Color(0xFFF8E8E93),
           decoration: TextDecoration.none,
+          letterSpacing: .7,
         ),
       ),
     );
@@ -744,57 +763,59 @@ class _LandingPageScreen extends State<LandingPageScreen> {
     return SafeArea(
       top: true,
       bottom: true,
-      child: Column(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Container(),
-          ),
-          Expanded(
-            flex: 16,
-            child: Column(
-              children: [
-                makePage(BuildContext),
-                dotindex(context),
-              ],
+      child: Container(
+        child: Column(
+          children: [
+            Expanded(
+              flex: 1,
+              child: Container(),
             ),
-          ),
-          Expanded(flex: 2, child: Container()),
-          Expanded(
-            flex: 5,
-            child: Column(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      widget.nextRoute,
-                    );
-                  },
-                  child: button(context),
-                ),
-                Expanded(
-                  flex: 7,
-                  child: Container(),
-                ),
-                Expanded(
-                  flex: 18,
-                  child: Column(children: [
-                    footnote(context, "Have a question? Contact us"),
-                    SizedBox(
-                      height: 1.5,
-                    ),
-                    footnote1(context, "Terms of use  |  Privacy policy"),
-                  ]),
-                ),
-                // Expanded(
-                //   flex: 5,
-                //   child: Container(),
-                // ),
-              ],
+            Expanded(
+              flex: 16,
+              child: Column(
+                children: [
+                  makePage(BuildContext),
+                  dotindex(context),
+                ],
+              ),
             ),
-          ),
-        ],
+            Expanded(flex: 2, child: Container()),
+            Expanded(
+              flex: 6,
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        widget.nextRoute,
+                      );
+                    },
+                    child: button(context),
+                  ),
+                  Expanded(
+                    flex: 7,
+                    child: Container(),
+                  ),
+                  Expanded(
+                    flex: 18,
+                    child: Column(children: [
+                      footnote(context, "Have a question? Contact us"),
+                      SizedBox(
+                        height: 4,
+                      ),
+                      footnote1(context, "Terms of use  |  Privacy policy"),
+                    ]),
+                  ),
+                  // Expanded(
+                  //   flex: 5,
+                  //   child: Container(),
+                  // ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
